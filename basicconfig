@@ -1,0 +1,26 @@
+---
+- name: Basic Configuration
+  hosts: CSR1kv
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: BASIC CONFIG
+     ios_command:
+       commands:
+         - enable
+         - configure terminal
+         - enable password cisco123
+         - hostname R1 
+     register: config
+
+   - name: DISPLAYING THE RUNNING-CONFIG
+     ios_command:
+       commands:
+         - show running-config  
+     register: config
+ 
+   - name: SAVE OUTPUT TO ./backups/
+     copy:
+       content: "{{ config.stdout[0] }}"
+       dest: "backups/show_run_{{ inventory_hostname }}.txt"

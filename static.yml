@@ -1,0 +1,16 @@
+---
+- name: AUTOMATIC BACKUP OF RUNNING-CONFIG
+  hosts: CSR1kv
+  gather_facts: false
+  connection: local
+ 
+  tasks:
+   - name: DISPLAYING THE RUNNING-CONFIG
+     ios_command:
+       commands:
+         - enable
+         - configure terminal
+         - ip route 0.0.0.0 0.0.0.0 100.0.0.1  
+     register: config
+
+ 
